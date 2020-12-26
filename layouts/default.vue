@@ -46,10 +46,10 @@
           >
         </nuxt-link>
 
-        <v-btn to="/about" class="ml-auto" text style="height: 100%"
+        <v-btn to="/about" class="ml-auto" text tile style="height: 100%"
           >О проекте</v-btn
         >
-        <v-btn to="/contacts" text style="height: 100%">Контакты</v-btn>
+        <v-btn to="/contacts" text tile style="height: 100%">Контакты</v-btn>
       </v-container>
 
       <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
@@ -81,9 +81,7 @@
       </v-btn> -->
     </v-app-bar>
     <v-main>
-      <v-container>
-        <nuxt />
-      </v-container>
+      <nuxt />
     </v-main>
     <!-- <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
       <v-list>
@@ -96,7 +94,12 @@
       </v-list>
     </v-navigation-drawer> -->
     <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+      <v-container grid-list-lg>
+        <span
+          >&copy; {{ new Date().getFullYear() }} {{ info.name }} Все права
+          защищены.</span
+        >
+      </v-container>
     </v-footer>
   </v-app>
 </template>
@@ -125,6 +128,11 @@ export default {
       rightDrawer: false,
       title: "Vuetify.js",
     };
+  },
+  computed: {
+    info() {
+      return this.$store.state.info;
+    },
   },
 };
 </script>

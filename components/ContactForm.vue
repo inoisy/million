@@ -53,8 +53,9 @@
     <v-flex xs12>
       <v-btn
         class="ml-0 mt-8"
-        color="black"
-        dark
+        :color="dark ? 'black' : 'white'"
+        :dark="dark"
+        :light="!dark"
         @click="submit"
         large
         :loading="loading"
@@ -99,6 +100,10 @@ export default {
     oneClickBuy: {
       type: Boolean,
       default: false,
+    },
+    dark: {
+      type: Boolean,
+      default: true,
     },
   },
   mixins: [validationMixin],

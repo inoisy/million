@@ -1,22 +1,23 @@
 <template>
-  <v-row justify="center" align="center" class="py-12">
-    <!-- {{ cursorX }} -->
-    <!-- {{ showPoint }} -->
-    <v-dialog v-model="dialog" width="600" :value="true">
-      <!-- <template v-slot:activator="{ on, attrs }">
+  <div class="wrapper">
+    <!-- <v-container>
+      <v-row justify="center" align="center" style=""> -->
+    <div class="wrapper-inner mx-auto">
+      <v-dialog v-model="dialog" width="600" :value="true">
+        <!-- <template v-slot:activator="{ on, attrs }">
         <v-btn color="red lighten-2" dark v-bind="attrs" v-on="on">
           Click Me
         </v-btn>
       </template> -->
 
-      <v-card class="px-12 py-12" light>
-        <p class="display-1 font-weight-bold text-center mb-6">
-          Забронируйте место
-        </p>
-        <contact-form />
-        <!-- <v-card-title class="grey lighten-2"> Privacy Policy </v-card-title> -->
+        <v-card class="px-12 py-12" light>
+          <p class="display-1 font-weight-bold text-center mb-6">
+            Забронируйте место
+          </p>
+          <contact-form />
+          <!-- <v-card-title class="grey lighten-2"> Privacy Policy </v-card-title> -->
 
-        <!-- <v-card-text>
+          <!-- <v-card-text>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -32,92 +33,81 @@
           <v-spacer></v-spacer>
           <v-btn color="primary" text @click="dialog = false"> I accept </v-btn>
         </v-card-actions> -->
-      </v-card>
-    </v-dialog>
-    <!-- <v-tooltip :value="true" top absolute
-      ><span>Место свободно</span><br />
-      Забронировать?
-    </v-tooltip>  @mouseout="showPoint = false"-->
-    <div class="grid-container" style="position: relative">
-      <div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0">
-        <canvas
-          @mousemove="handleMove"
-          @mouseover="handleOver"
-          @mouseout="handleOut"
-          id="canv"
-          width="1000"
-          height="1000"
-          style="display: block; width: 1000px; height: 1000px"
-          >Ваш браузер устарел, обновитесь.</canvas
-        >
-      </div>
-      <v-tooltip top>
-        <template v-slot:activator="{ on, attrs }">
-          <a
-            v-bind="attrs"
-            v-on="on"
-            href="http://mmk-soap.ru/"
-            target="_blanc"
-            class="grid-item"
-            style="z-index: 2"
+        </v-card>
+      </v-dialog>
+      <div class="grid-container">
+        <div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0">
+          <canvas
+            @mousemove="handleMove"
+            @mouseover="handleOver"
+            @mouseout="handleOut"
+            id="canv"
+            >Ваш браузер устарел, обновитесь.</canvas
           >
-            <img class="grid-item-img" src="@/assets/llogo.png" alt="" />
-          </a>
+        </div>
+        <template v-for="(item, index) in items">
+          <ad-item :item="item" :key="`ad-item${index}`" />
         </template>
-        <span>Мыловаренный Комбинат</span>
-      </v-tooltip>
 
-      <div
-        v-show="showPoint"
-        id="select-point"
-        v-bind:style="pointStyles"
-        @mouseover="handleCursorOver"
-        @mouseout="handleCursorOut"
-        @click="dialog = true"
-      >
-        <div class="tooltip" style="" v-show="showTooltip">
-          <span>Место свободно</span><br />
-          Забронировать?
+        <div
+          v-show="showPoint"
+          id="select-point"
+          v-bind:style="pointStyles"
+          @mouseover="handleCursorOver"
+          @mouseout="handleCursorOut"
+          @click="dialog = true"
+        >
+          <!-- <v-fade-transition> -->
+          <transition name="fade">
+            <div class="tooltip" style="" v-show="showTooltip">
+              <span>Место свободно</span><br />
+              Забронировать?
+            </div>
+          </transition>
+          <!-- </v-fade-transition> -->
         </div>
       </div>
-
-      <!--  :style="`background-color: red; grid-row-start: ${cursorY};
-          grid-column-start: ${cursorX};
-          grid-row-end: ${cursorY + 1};
-          grid-column-end: ${cursorX + 1};`"
-          <template v-for="(item, index) in new Array(9999)">
-        <div
-          :key="index"
-          class="item-hoverable"
-          @mouseover="handleHover"
-          @mouseleave="handleLeave"
-        ></div>
-      </template> -->
     </div>
-    <!-- <v-col cols="12" sm="8" md="6">
-     </v-col> -->
-  </v-row>
+    <!-- </v-row>
+    </v-container> -->
+  </div>
 </template>
 <style lang="scss">
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.35s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+.wrapper {
+  // background-color: #85bb65;
+  padding: 70px 0px;
+  overflow-x: auto;
+  // https://www.freepik.com/free-photo/black-texture_973584.htm#page=1&query=background%20dark&position=1
+  background: url(https://image.freepik.com/free-photo/black-texture_1205-327.jpg?1);
+  background-repeat: no-repeat;
+  background-size: cover;
+  .wrapper-inner {
+    max-width: 1000px;
+  }
+}
+#canv {
+  background-color: white;
+  display: block;
+  width: 1000px;
+  height: 1000px;
+}
 .grid-container {
   display: grid;
   grid-template-columns: repeat(100, 10px [col-start]);
   grid-template-rows: repeat(100, 10px [col-start]);
   grid-auto-flow: dense;
+  position: relative;
+  // overflow-x: auto;
   // background-color: gray;
 }
-.grid-item {
-  background-color: white;
-  display: flex;
-  width: 100%;
-  height: 100%;
 
-  grid-column-start: 4;
-  grid-column-end: 51;
-
-  grid-row-start: 3;
-  grid-row-end: 16;
-}
 .grid-item-img {
   width: 100%;
   height: 100%;
@@ -127,7 +117,7 @@
 #select-point {
   z-index: 2;
   position: relative;
-  background-color: red;
+  background-color: #005aee;
   cursor: pointer;
 }
 .tooltip {
@@ -161,6 +151,7 @@
 </style>
 <script>
 import ContactForm from "~/components/ContactForm.vue";
+import AdItem from "~/components/AdItem";
 // import Logo from "~/components/Logo.vue";
 // import VuetifyLogo from "~/components/VuetifyLogo.vue";
 function round10(val) {
@@ -175,12 +166,26 @@ export default {
       cursorHover: false,
       showPoint: false,
       dialog: false,
+      items: [
+        {
+          name: "Мыловаренный Комбинат",
+          img: {
+            url: "http://mmk-soap.ru/wp-content/uploads/2019/12/llogo.png",
+          },
+          link: "http://mmk-soap.ru/",
+          coords: {
+            startX: 5,
+            endX: 30,
+            startY: 3,
+            endY: 10,
+          },
+        },
+      ],
     };
   },
   components: {
     ContactForm,
-    // Logo,
-    // VuetifyLogo,
+    AdItem,
   },
   mounted() {
     function DCanvas(el) {
