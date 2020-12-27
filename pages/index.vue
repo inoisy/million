@@ -64,12 +64,15 @@
   padding: 70px 0px;
   // overflow-x: auto;
 
-  background: url(~assets/bg.jpg);
+  // background: url(https://image.freepik.com/free-photo/abstract-urban-night-light-bokeh-defocused-background_1421-468.jpg);
+
+  background: url(~assets/bg.jpg); // linear-gradient(0deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)),
 
   // https://www.freepik.com/free-photo/black-texture_973584.htm#page=1&query=background%20dark&position=1
   // background: url(https://image.freepik.com/free-photo/black-texture_1205-327.jpg?1);
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
@@ -175,7 +178,7 @@ export default {
         {
           name: "Мыловаренный Комбинат",
           img: {
-            url: "http://mmk-soap.ru/wp-content/uploads/2019/12/llogo.png",
+            url: require("~/assets/llogo.png"),
           },
           link: "http://mmk-soap.ru/",
           coords: {
