@@ -59,7 +59,7 @@
           v-bind:style="pointStyles"
           @mouseover="handleCursorOver"
           @mouseout="handleCursorOut"
-          @click="dialog = true"
+          @click="handlePointClick"
         >
           <!-- <v-fade-transition> -->
           <transition name="fade">
@@ -342,8 +342,12 @@ export default {
       };
     },
     isMobile() {
-      const width = this.$vuetify.breakpoint.width;
-      return width < 1000;
+      if (process.client) {
+        const width = document.body.clientWidth;
+        return width < 1000;
+      } else {
+        return true;
+      }
     },
     padding() {
       return this.isMobile ? 12 : 24;
@@ -377,7 +381,7 @@ export default {
     //   return this.$vuetify.breakpoint.mdAndDown;
     // },
     handleResize() {
-      if (this.isMobile) {
+      if (document.body.clientWidth < 1000 + this.padding * 2) {
         // console.log(this.isMobile);
         const getRect = this.$refs.container.getBoundingClientRect();
         // console.log(
@@ -397,6 +401,11 @@ export default {
         this.scale = 1;
       }
     },
+    handlePointClick() {
+      document.body.style.zoom = "100%";
+      dialog = true;
+    },
+
     // handleLeave(e) {
     //   // console.log("🚀 ~  handleLeave");
     //   e.target.style.backgroundColor = "unset";
