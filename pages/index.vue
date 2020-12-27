@@ -93,6 +93,11 @@
   background: url(https://image.freepik.com/free-photo/black-texture_1205-327.jpg?1);
   background-repeat: no-repeat;
   background-size: cover;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  /* justify-content: center; */
+  overflow: hidden;
   .wrapper-inner {
     // max-width: 1000px;
     max-height: 100vw;
