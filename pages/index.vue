@@ -407,8 +407,8 @@ export default {
       }
     },
     handlePointClick() {
-      document.body.style.zoom = "100%";
-      dialog = true;
+      // document.body.style.zoom = "100%";
+      this.dialog = true;
     },
 
     // handleLeave(e) {
