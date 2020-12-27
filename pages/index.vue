@@ -1,8 +1,12 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper" ref="container">
     <!-- <v-container>
       <v-row justify="center" align="center" style=""> -->
-    <div class="wrapper-inner mx-auto">
+    <div
+      class="wrapper-inner mx-auto"
+      v-resize="handleResize"
+      :style="`padding-left: ${padding}px; padding-right: ${padding}px;`"
+    >
       <v-dialog v-model="dialog" width="600" :value="true">
         <!-- <template v-slot:activator="{ on, attrs }">
         <v-btn color="red lighten-2" dark v-bind="attrs" v-on="on">
@@ -35,7 +39,7 @@
         </v-card-actions> -->
         </v-card>
       </v-dialog>
-      <div class="grid-container">
+      <div class="grid-container" :style="`transform: scale(${scale});`">
         <div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0">
           <canvas
             @mousemove="handleMove"
@@ -72,7 +76,7 @@
     </v-container> -->
   </div>
 </template>
-<style lang="scss">
+<style lang="scss" >
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.35s;
@@ -83,15 +87,23 @@
 .wrapper {
   // background-color: #85bb65;
   padding: 70px 0px;
-  overflow-x: auto;
+  // overflow-x: auto;
   // https://www.freepik.com/free-photo/black-texture_973584.htm#page=1&query=background%20dark&position=1
   background: url(https://image.freepik.com/free-photo/black-texture_1205-327.jpg?1);
   background-repeat: no-repeat;
   background-size: cover;
   .wrapper-inner {
-    max-width: 1000px;
+    // max-width: 1000px;
+    max-height: 100vw;
   }
 }
+
+@media (min-width: 600px) {
+}
+
+@media (min-width: 960px) {
+}
+
 #canv {
   background-color: white;
   display: block;
@@ -104,6 +116,9 @@
   grid-template-rows: repeat(100, 10px [col-start]);
   grid-auto-flow: dense;
   position: relative;
+  // transform: scale(0.8);
+  transform-origin: 0 0;
+  // width: 100vw;
   // overflow-x: auto;
   // background-color: gray;
 }
@@ -181,6 +196,7 @@ export default {
           },
         },
       ],
+      scale: 1,
     };
   },
   components: {
@@ -290,56 +306,6 @@ export default {
         is_mouse_down = true;
         // ctx.beginPath();
       });
-
-      el.addEventListener("mouseup", function (e) {
-        // is_mouse_down = false;
-      });
-
-      el.addEventListener("mousemove", (e) => {
-        // console.log(
-        //   "🚀 ~ file: index.vue ~ line 184 ~ el.addEventListener ~ e.offsetX",
-        //   round10(e.offsetX)
-        // );
-        // console.log(
-        //   "🚀 ~ file: index.vue ~ line 186 ~ el.addEventListener ~ e.offsetY",
-        //   round10(e.offsetY)
-        // );
-        // this.drawCell(round10(e.offsetX), round10(e.offsetY), 10, 10);
-        // ctx.beginPath();
-        // const w = canv.width;
-        // const h = canv.height;
-        // const p = w / pixel;
-        // const xStep = w / p;
-        // const yStep = h / p;
-        // const vector = [];
-        // let __draw = [];
-        // for (let x = 0; x < w; x += xStep) {
-        //   console.log(
-        //     "🚀 ~ file: index.vue ~ line 184 ~ el.addEventListener ~ x",
-        //     x
-        //   );
-        //   for (let y = 0; y < h; y += yStep) {
-        //     console.log(
-        //       "🚀 ~ file: index.vue ~ line 185 ~ el.addEventListener ~ y",
-        //       y
-        //     );
-        //   }
-        // }
-        // if (is_mouse_down) {
-        //   ctx.fillStyle = "red";
-        //   ctx.strokeStyle = "red";
-        //   ctx.lineWidth = pixel;
-        //   ctx.lineTo(e.offsetX, e.offsetY);
-        //   ctx.stroke();
-        //   ctx.beginPath();
-        //   ctx.arc(e.offsetX, e.offsetY, pixel / 2, 0, Math.PI * 2);
-        //   console.log("e.offsetX", e.offsetX);
-        //   console.log("e.offsetY", e.offsetY);
-        //   ctx.fill();
-        //   ctx.beginPath();
-        //   ctx.moveTo(e.offsetX, e.offsetY);
-        // }
-      });
     }
 
     let vector = [];
@@ -348,36 +314,15 @@ export default {
 
     const d = new DCanvas(document.getElementById("canv"));
     d.drawGrid();
-    document.addEventListener("keypress", function (e) {
-      if (e.key.toLowerCase() == "c") {
-        d.clear();
-      }
 
-      if (e.key.toLowerCase() == "v") {
-        vector = d.calculate(true);
+    // const getRect = this.$refs.container.getBoundingClientRect();
+    // console.log("🚀 ~ file: index.vue ~ line 304 ~ mounted ~ getRect", getRect);
+    // const width = getRect.width;
+    // console.log("width ", width);
+    // console.log("width/100 ", width / (1000 + 48));
+    // this.scale = width / (1000 + 48);
 
-        //train
-        // if (confirm("Positive?")) {
-        //   train_data.push({
-        //     input: vector,
-        //     output: { positive: 1 },
-        //   });
-        // } else {
-        //   train_data.push({
-        //     input: vector,
-        //     output: { negative: 1 },
-        //   });
-        // }
-      }
-
-      if (e.key.toLowerCase() == "b") {
-        net = new brain.NeuralNetwork();
-        net.train(train_data, { log: true });
-
-        const result = brain.likely(d.calculate(), net);
-        alert(result);
-      }
-    });
+    this.handleResize();
   },
   computed: {
     pointStyles() {
@@ -387,6 +332,13 @@ export default {
         "grid-row-end": this.cursorY + 1,
         "grid-column-end": this.cursorX + 1,
       };
+    },
+    isMobile() {
+      const width = this.$vuetify.breakpoint.width;
+      return width < 1000;
+    },
+    padding() {
+      return this.isMobile ? 12 : 24;
     },
   },
   methods: {
@@ -398,36 +350,64 @@ export default {
       this.cursorHover = true;
       this.showTooltip = true;
     },
+
+    handleMove(e) {
+      this.cursorX = Math.floor(e.offsetX / 10) + 1;
+      this.cursorY = Math.floor(e.offsetY / 10) + 1;
+      // console.log(" handleMove ", this.cursorX, this.cursorY);
+    },
+    handleOver() {
+      this.showPoint = true;
+    },
     handleOut(e) {
       if (!this.cursorHover) {
         this.showTooltip = false;
       }
       // this.showPoint = false;
     },
-    handleMove(e) {
-      this.cursorX = Math.floor(e.offsetX / 10) + 1;
-      this.cursorY = Math.floor(e.offsetY / 10) + 1;
-      console.log(" handleMove ", this.cursorX, this.cursorY);
+    // isMobile() {
+    //   return this.$vuetify.breakpoint.mdAndDown;
+    // },
+    handleResize() {
+      const width = this.$vuetify.breakpoint.width;
+      console.log("width", width);
+      console.log(this.$vuetify.breakpoint.mdAndDown);
+      const widthWidhPadding = 1000 + 48;
+      if (width < widthWidhPadding) {
+        // console.log(this.isMobile);
+        const getRect = this.$refs.container.getBoundingClientRect();
+        // console.log(
+        //   "🚀 ~ file: index.vue ~ line 304 ~ mounted ~ getRect",
+        //   getRect
+        // );
+        const width = getRect.width;
+        console.log("getRectwidth ", width - this.padding * 2);
+        // console.log("width/100 ", width / widthWidhPadding);
+        this.scale = (width - this.padding * 2) / 1000;
+        console.log(
+          "🚀 ~ file: index.vue ~ line 371 ~ handleResize ~ this.scale",
+          this.scale
+        );
+      } else {
+        this.scale = 1;
+      }
     },
-    handleOver() {
-      this.showPoint = true;
-    },
-    handleLeave(e) {
-      // console.log("🚀 ~  handleLeave");
-      e.target.style.backgroundColor = "unset";
-    },
+    // handleLeave(e) {
+    //   // console.log("🚀 ~  handleLeave");
+    //   e.target.style.backgroundColor = "unset";
+    // },
 
-    handleHover(e) {
-      // console.log(
-      //   "🚀 ~ file: index.vue ~ line 48 ~ handleHover ~ target",
-      //   target
-      // );
-      e.target.style.backgroundColor = "blue";
-      // console.log(
-      //   "🚀 ~ file: index.vue ~ line 48 ~ handleHover ~ target",
-      //   e.target
-      // );
-    },
+    // handleHover(e) {
+    //   // console.log(
+    //   //   "🚀 ~ file: index.vue ~ line 48 ~ handleHover ~ target",
+    //   //   target
+    //   // );
+    //   e.target.style.backgroundColor = "blue";
+    //   // console.log(
+    //   //   "🚀 ~ file: index.vue ~ line 48 ~ handleHover ~ target",
+    //   //   e.target
+    //   // );
+    // },
   },
 };
 </script>
