@@ -85,6 +85,7 @@
   opacity: 0;
 }
 .wrapper {
+  height: 100%;
   // background-color: #85bb65;
   padding: 70px 0px;
   // overflow-x: auto;
@@ -95,6 +96,8 @@
   .wrapper-inner {
     // max-width: 1000px;
     max-height: 100vw;
+    display: flex;
+    // justify-content: center;
   }
 }
 
@@ -102,6 +105,11 @@
 }
 
 @media (min-width: 960px) {
+  .wrapper {
+    .wrapper-inner {
+      justify-content: center;
+    }
+  }
 }
 
 #canv {
@@ -369,11 +377,7 @@ export default {
     //   return this.$vuetify.breakpoint.mdAndDown;
     // },
     handleResize() {
-      const width = this.$vuetify.breakpoint.width;
-      console.log("width", width);
-      console.log(this.$vuetify.breakpoint.mdAndDown);
-      const widthWidhPadding = 1000 + 48;
-      if (width < widthWidhPadding) {
+      if (this.isMobile) {
         // console.log(this.isMobile);
         const getRect = this.$refs.container.getBoundingClientRect();
         // console.log(
@@ -381,13 +385,14 @@ export default {
         //   getRect
         // );
         const width = getRect.width;
-        console.log("getRectwidth ", width - this.padding * 2);
+        const scale = (width - this.padding * 2) / 1000;
+        console.log("scale ", scale);
         // console.log("width/100 ", width / widthWidhPadding);
-        this.scale = (width - this.padding * 2) / 1000;
-        console.log(
-          "🚀 ~ file: index.vue ~ line 371 ~ handleResize ~ this.scale",
-          this.scale
-        );
+        if (scale < 1) {
+          this.scale = scale;
+        } else {
+          this.scale = 1;
+        }
       } else {
         this.scale = 1;
       }
