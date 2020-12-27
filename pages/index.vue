@@ -1,42 +1,16 @@
 <template>
   <div class="wrapper" ref="container">
-    <!-- <v-container>
-      <v-row justify="center" align="center" style=""> -->
     <div
       class="wrapper-inner mx-auto"
       v-resize="handleResize"
       :style="`padding-left: ${padding}px; padding-right: ${padding}px;`"
     >
       <v-dialog v-model="dialog" width="600" :value="true">
-        <!-- <template v-slot:activator="{ on, attrs }">
-        <v-btn color="red lighten-2" dark v-bind="attrs" v-on="on">
-          Click Me
-        </v-btn>
-      </template> -->
-
         <v-card class="px-12 py-12" light>
           <p class="display-1 font-weight-bold text-center mb-6">
             Забронируйте место
           </p>
           <contact-form />
-          <!-- <v-card-title class="grey lighten-2"> Privacy Policy </v-card-title> -->
-
-          <!-- <v-card-text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </v-card-text>
-
-        <v-divider></v-divider>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="dialog = false"> I accept </v-btn>
-        </v-card-actions> -->
         </v-card>
       </v-dialog>
       <div class="grid-container" :style="`transform: scale(${scale});`">
@@ -89,8 +63,11 @@
   // background-color: #85bb65;
   padding: 70px 0px;
   // overflow-x: auto;
+
+  background: url(~assets/bg.jpg);
+
   // https://www.freepik.com/free-photo/black-texture_973584.htm#page=1&query=background%20dark&position=1
-  background: url(https://image.freepik.com/free-photo/black-texture_1205-327.jpg?1);
+  // background: url(https://image.freepik.com/free-photo/black-texture_1205-327.jpg?1);
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;
@@ -386,6 +363,9 @@ export default {
     //   return this.$vuetify.breakpoint.mdAndDown;
     // },
     handleResize() {
+      // if (window.devicePixelRatio !== 1) {
+      //   return;
+      // }
       if (document.body.clientWidth < 1000 + this.padding * 2) {
         // console.log(this.isMobile);
         const getRect = this.$refs.container.getBoundingClientRect();
@@ -407,6 +387,10 @@ export default {
       }
     },
     handlePointClick() {
+      var scale = "scale(1)";
+      document.body.style.webkitTransform = scale; // Chrome, Opera, Safari
+      document.body.style.msTransform = scale; // IE 9
+      document.body.style.transform = scale; // General
       // document.body.style.zoom = "100%";
       this.dialog = true;
     },
