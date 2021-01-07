@@ -98,7 +98,7 @@
 }
 
 #canv {
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.7);
   display: block;
   width: 1000px;
   height: 1000px;

@@ -6,7 +6,7 @@ export const state = () => ({
     },
     contacts: {
         phone: "+79057655115",
-        email: "1mdollar5115@gmail.com"
+        email: "bestadforyou5115@gmail.com"
     }
 })
 

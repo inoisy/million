@@ -66,8 +66,8 @@
     <v-footer absolute app>
       <v-container grid-list-lg>
         <span
-          >&copy; {{ new Date().getFullYear() }} {{ info.name }} Все права
-          защищены.</span
+          >&copy; {{ new Date().getFullYear() }} {{ info.name }} Лучшая реклама
+          для вас.</span
         >
       </v-container>
     </v-footer>
