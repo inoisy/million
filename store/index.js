@@ -1,6 +1,7 @@
 
 
 export const state = () => ({
+    dialog: false,
     info: {
         name: "1MDollar.com"
     },
@@ -10,10 +11,16 @@ export const state = () => ({
     }
 })
 
-export const actions = {
 
-}
 
 export const mutations = {
+    dialog(state, item) {
+        state.dialog = item
+    },
+}
 
+export const actions = {
+    toggleDialog(ctx, data) {
+        ctx.commit("dialog", data)
+    }
 }

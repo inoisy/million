@@ -1,5 +1,5 @@
 <template>
-  <v-tooltip top>
+  <v-tooltip top v-if="item.img">
     <template v-slot:activator="{ on, attrs }">
       <a
         v-bind="attrs"
@@ -9,10 +9,14 @@
         class="grid-item"
         v-bind:style="styles"
       >
-        <img class="grid-item-img" :src="item.img.url" :alt="item.name" />
+        <img
+          class="grid-item-img"
+          :src="baseUrl + item.img.url"
+          :alt="item.companyName"
+        />
       </a>
     </template>
-    <span>{{ item.name }}</span>
+    <span>{{ item.companyName }}</span>
   </v-tooltip>
 </template>
 <style lang="scss">
@@ -33,13 +37,18 @@
 <script>
 export default {
   props: ["item"],
+  data() {
+    return {
+      baseUrl: process.env.baseUrl,
+    };
+  },
   computed: {
     styles() {
       return {
-        "grid-column-start": this.item.coords.startX,
-        "grid-column-end": this.item.coords.endX,
-        "grid-row-start": this.item.coords.startY,
-        "grid-row-end": this.item.coords.endY,
+        "grid-column-start": this.item.startX,
+        "grid-column-end": this.item.endX,
+        "grid-row-start": this.item.startY,
+        "grid-row-end": this.item.endY,
       };
     },
   },

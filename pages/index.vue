@@ -1,18 +1,18 @@
 <template>
   <div class="wrapper" ref="container">
+    <v-dialog v-model="dialog" width="600" :value="true" attach=".wrapper">
+      <v-card class="px-12 py-12" light>
+        <p class="display-1 font-weight-bold text-center mb-6">
+          Забронируйте место
+        </p>
+        <contact-form />
+      </v-card>
+    </v-dialog>
     <div
       class="wrapper-inner mx-auto"
       v-resize="handleResize"
       :style="`padding-left: ${padding}px; padding-right: ${padding}px;`"
     >
-      <v-dialog v-model="dialog" width="600" :value="true">
-        <v-card class="px-12 py-12" light>
-          <p class="display-1 font-weight-bold text-center mb-6">
-            Забронируйте место
-          </p>
-          <contact-form />
-        </v-card>
-      </v-dialog>
       <div class="grid-container" :style="`transform: scale(${scale});`">
         <div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0">
           <canvas
@@ -166,6 +166,13 @@ function round10(val) {
   return Math.round(val / 10) * 10;
 }
 export default {
+  async asyncData({ $axios }) {
+    const { data: ads } = await $axios.get("/advertisements");
+    console.log("🚀 ~ file: index.vue ~ line 171 ~ asyncData ~ ads", ads);
+    return {
+      items: ads,
+    };
+  },
   data() {
     return {
       cursorX: 20,
@@ -174,21 +181,21 @@ export default {
       cursorHover: false,
       showPoint: false,
       dialog: false,
-      items: [
-        {
-          name: "Мыловаренный Комбинат",
-          img: {
-            url: require("~/assets/llogo.png"),
-          },
-          link: "http://mmk-soap.ru/",
-          coords: {
-            startX: 5,
-            endX: 30,
-            startY: 3,
-            endY: 10,
-          },
-        },
-      ],
+      // items: [
+      //   {
+      //     name: "Мыловаренный Комбинат",
+      //     img: {
+      //       url: require("~/assets/llogo.png"),
+      //     },
+      //     link: "http://mmk-soap.ru/",
+      //     coords: {
+      //       startX: 5,
+      //       endX: 30,
+      //       startY: 3,
+      //       endY: 10,
+      //     },
+      //   },
+      // ],
       scale: 1,
     };
   },

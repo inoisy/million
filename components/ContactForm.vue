@@ -66,7 +66,7 @@
       <!-- :disabled="submitDisabled" -->
     </v-flex>
     <!-- </template> -->
-    <!-- <v-slide-y-transition>
+    <v-slide-y-transition>
       <v-flex xs12 v-if="this.formSuccess || this.formError">
         <v-alert :value="this.formSuccess" class="flex xs12 mt-3" type="success"
           >Заказ успешно отправлен.</v-alert
@@ -75,7 +75,7 @@
           >Ошибка при отправке заказа.</v-alert
         >
       </v-flex>
-    </v-slide-y-transition> -->
+    </v-slide-y-transition>
   </v-form>
 </template>
 
@@ -134,9 +134,7 @@ export default {
       formError: false,
       name: "",
       phone: "",
-      //   address: "",
       email: "",
-      userID: "",
       message: "",
       mask: "+7 (###) ### - ####",
       loading: false,
@@ -154,67 +152,32 @@ export default {
     async submit() {
       this.$v.$touch();
       if (this.$v.$anyError) return;
-      //   // console.log("submit -> busket", this.$store.state.localStorage.basket);
-      //   const busketObj = this.$store.state.localStorage.basket.map((item) => {
-      //     return {
-      //       name: item.name,
-      //       qty: item.count,
-      //       id: item.id,
-      //       price: item.isDiscount
-      //         ? Math.round(item.discountPrice)
-      //         : Math.round(item.priceNum),
-      //       priceAll: item.isDiscount
-      //         ? Math.round(item.discountPrice * item.count)
-      //         : Math.round(item.priceNum * item.count),
-      //     };
-      //   });
-      //   // console.log("submit -> busket", busketObj);
-      //   try {
-      //     this.loading = true;
-      //     const req = await this.$axios.post(process.env.baseUrl + "/orders", {
-      //       oneClickbuy: this.oneClickBuy,
-      //       productName: this.oneClickBuy ? this.productName : null,
-      //       busket: busketObj,
-      //       name: this.name,
-      //       phone: this.phone,
-      //       message: this.message,
-      //       address: this.address,
-      //       email: this.email,
-      //       user: this.userID,
-      //       summa: this.$store.getters.summa,
-      //       // REMOVE
-      //       // isTest: true,
-      //     });
-      //     this.loading = false;
-      //     if (req.status === 200) {
-      //       // this.$store.commit("saveBasket");
-      //       if (!this.$store.getters["auth/isLogined"]) {
-      //         this.$store.commit("setUserData", {
-      //           name: this.name,
-      //           phone: this.phone,
-      //           address: this.address,
-      //           email: this.email,
-      //         });
-      //       }
 
-      //       this.formSuccess = true;
-      //       if (window.yaCounter54918895) {
-      //         window.yaCounter54918895.reachGoal("order");
-      //       }
-      //       setTimeout(() => {
-      //         this.$emit("offerClose");
-      //         !this.oneClickBuy && this.$store.commit("clearBasket");
-      //       }, 4000);
-      //     } else {
-      //       this.formError = true;
-      //       this.loading = false;
-      //     }
-      //   } catch (error) {
-      //     this.loading = false;
-      //     // console.log("submit -> error", error);
-      //     this.formError = true;
-      //     this.clear();
-      //   }
+      try {
+        this.loading = true;
+        const req = await this.$axios.post(process.env.baseUrl + "/orders", {
+          name: this.name,
+          phone: this.phone,
+          message: this.message,
+          email: this.email,
+          // REMOVE
+          isTest: true,
+        });
+        this.loading = false;
+        if (req.status === 200) {
+          // this.$store.commit("saveBasket");
+
+          this.formSuccess = true;
+        } else {
+          this.formError = true;
+          this.loading = false;
+        }
+      } catch (error) {
+        this.loading = false;
+        // console.log("submit -> error", error);
+        this.formError = true;
+        this.clear();
+      }
     },
   },
   computed: {

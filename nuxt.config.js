@@ -1,6 +1,10 @@
 import colors from 'vuetify/es5/util/colors'
 
+const baseURL = process.env.BASE_URL || 'http://localhost:1337'
 export default {
+  env: {
+    baseUrl: baseURL
+  },
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     titleTemplate: '%s - million',
@@ -78,7 +82,9 @@ export default {
   //   ]
   // },
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
+  axios: {
+    baseURL: baseURL,
+  },
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {
