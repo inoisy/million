@@ -183,7 +183,7 @@ export default {
   },
   async asyncData({ $axios }) {
     const { data: ads } = await $axios.get("/advertisements");
-    console.log("🚀 ~ file: index.vue ~ line 171 ~ asyncData ~ ads", ads);
+    // console.log("🚀 ~ file: index.vue ~ line 171 ~ asyncData ~ ads", ads);
     return {
       items: ads,
     };

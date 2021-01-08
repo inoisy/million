@@ -44,35 +44,14 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    // 'nuxt-webfontloader',
-    // ['@nuxtjs/vuetify', {
-    //   treeShake: true,
-    //   defaultAssets: {
-    //     font: {
-    //       family: 'Montserrat'
-    //     },
-    //     icons: "md"
-    //   },
-    //   customVariables: ['~/assets/variables.scss'],
-    //   options: {
-    //     customProperties: true
-    //   },
-    //   theme: {
-    //     dark: true,
-    //     themes: {
-    //       dark: {
-    //         primary: colors.blue.darken2,
-    //         accent: colors.grey.darken3,
-    //         secondary: colors.amber.darken3,
-    //         info: colors.teal.lighten1,
-    //         warning: colors.amber.base,
-    //         error: colors.deepOrange.accent4,
-    //         success: colors.green.accent3
-    //       }
-    //     }
-    //   }
-    // }
-    // ],
+    ['nuxt-social-meta', {
+      url: "https://bestadforyou.com/",
+      title: "BestAdForYou - Рекламная площадка",
+      // description: description,
+      // img: imageUrl + "/uploads/031ba5905e18488794851c8d512b1227.jpg",
+      locale: 'ru_RU',
+      // themeColor: '#d50000'
+    }],
   ],
   // webfontloader: {
   //   google: {
