@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper" ref="container">
     <v-dialog v-model="dialog" width="600" :value="true" attach=".wrapper">
-      <v-card class="px-12 py-12" light>
+      <v-card class="px-8 py-12" light>
         <p class="display-1 font-weight-bold text-center mb-6">
           Забронируйте место
         </p>
@@ -61,6 +61,7 @@
 }
 .wrapper {
   height: 100%;
+  max-height: calc(100vh - 60px);
   // background-color: #85bb65;
   padding: 70px 0px;
   // overflow-x: auto;
@@ -83,11 +84,18 @@
     // max-width: 1000px;
     max-height: 100vw;
     display: flex;
+    margin-bottom: -24px;
     // justify-content: center;
   }
 }
 
 @media (min-width: 600px) {
+  .wrapper {
+    max-height: 100%;
+    .wrapper-inner {
+      margin-bottom: 0;
+    }
+  }
 }
 
 @media (min-width: 960px) {
