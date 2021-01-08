@@ -155,7 +155,7 @@ export default {
 
       try {
         this.loading = true;
-        const req = await this.$axios.post(process.env.baseUrl + "/orders", {
+        const req = await this.$axios.post("/orders", {
           name: this.name,
           phone: this.phone,
           message: this.message,

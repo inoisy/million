@@ -11,7 +11,7 @@
       >
         <img
           class="grid-item-img"
-          :src="baseUrl + item.img.url"
+          :src="$config.baseURL + item.img.url"
           :alt="item.companyName"
         />
       </a>
@@ -37,11 +37,11 @@
 <script>
 export default {
   props: ["item"],
-  data() {
-    return {
-      baseUrl: process.env.baseUrl,
-    };
-  },
+  // data() {
+  //   return {
+  //     baseUrl: this.$config.baseURL,
+  //   };
+  // },
   computed: {
     styles() {
       return {

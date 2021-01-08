@@ -2,8 +2,11 @@ import colors from 'vuetify/es5/util/colors'
 
 const baseURL = process.env.BASE_URL || 'http://localhost:1337'
 export default {
-  env: {
-    baseUrl: baseURL
+  // env: {
+  //   baseUrl: baseURL
+  // },
+  publicRuntimeConfig: {
+    baseURL: baseURL
   },
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
