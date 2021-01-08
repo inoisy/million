@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper" ref="container">
-    <v-dialog v-model="dialog" width="600" :value="true" attach=".wrapper">
+    <v-dialog v-model="dialog" width="600" :value="true" hide-overlay>
       <v-card class="px-8 py-12" light>
         <p class="display-1 font-weight-bold text-center mb-6">
           Забронируйте место
@@ -189,7 +189,7 @@ export default {
       showTooltip: false,
       cursorHover: false,
       showPoint: false,
-      dialog: false,
+      dialogVal: false,
       // items: [
       //   {
       //     name: "Мыловаренный Комбинат",
@@ -334,6 +334,20 @@ export default {
     this.handleResize();
   },
   computed: {
+    dialog: {
+      get() {
+        return this.dialogVal;
+      },
+      set(val) {
+        console.log("🚀 ~ file: index.vue ~ line 343 ~ set ~ val", val);
+        if (!val) {
+          document.body.style = "";
+        }
+        // set does not return anything
+        this.dialogVal = val;
+      },
+    },
+
     pointStyles() {
       return {
         "grid-row-start": this.cursorY,

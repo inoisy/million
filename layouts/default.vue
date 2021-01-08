@@ -1,6 +1,6 @@
 <template>
   <v-app dark height="64px">
-    <v-navigation-drawer v-model="drawer" app temporary right>
+    <v-navigation-drawer v-model="drawer" app right touchless temporary>
       <v-list>
         <v-list-item
           v-for="(item, i) in menuItems"
