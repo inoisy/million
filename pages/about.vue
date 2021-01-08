@@ -6,5 +6,11 @@
   </v-container>
 </template>
 <script>
-export default {};
+export default {
+  head() {
+    return {
+      title: "О проекте",
+    };
+  },
+};
 </script>

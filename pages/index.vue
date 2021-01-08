@@ -175,6 +175,12 @@ function round10(val) {
   return Math.round(val / 10) * 10;
 }
 export default {
+  head() {
+    return {
+      title: "BestAdForYou - Рекламная площадка",
+      titleTemplate: "",
+    };
+  },
   async asyncData({ $axios }) {
     const { data: ads } = await $axios.get("/advertisements");
     console.log("🚀 ~ file: index.vue ~ line 171 ~ asyncData ~ ads", ads);

@@ -68,6 +68,11 @@ a {
 import ContactForm from "~/components/ContactForm";
 
 export default {
+  head() {
+    return {
+      title: "Контакты",
+    };
+  },
   components: { ContactForm },
   computed: {
     contacts() {
