@@ -177,7 +177,7 @@ function round10(val) {
 export default {
   head() {
     return {
-      title: "BestAdForYou - Рекламная площадка",
+      title: "BestAdForYou",
       titleTemplate: "",
     };
   },
