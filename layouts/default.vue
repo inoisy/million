@@ -26,7 +26,7 @@
           style="text-decoration: none; color: white"
         >
           <v-img
-            :src="require('~/assets/logo.jpg')"
+            :src="require('~/assets/logo.png')"
             contain
             height="52px"
             width="52px"
