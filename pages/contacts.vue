@@ -1,13 +1,8 @@
 <template>
   <div class="d-flex fill-height">
-    <!-- <div class="grey darken-3">
-      <v-container class="py-12">
-        
-      </v-container>
-    </div> -->
     <v-container grid-list-lg class="align-center d-flex">
       <v-layout row wrap class="py-12">
-        <v-col cols="12" md="6">
+        <!-- <v-col cols="12" md="6">
           <h1 class="text-h4 mb-9">Контакты</h1>
           <div
             v-for="(contact, i) in contacts"
@@ -22,17 +17,20 @@
               <v-icon class="mr-3">{{ contact.icon }}</v-icon>
               {{ contact.text }}
             </a>
-            <!-- color="rgba(0,0,0,0.87)" -->
             <div v-else class="font-weight-medium d-inline-flex align-center">
               <v-icon class="mr-3">{{ contact.icon }}</v-icon>
               {{ contact.text }}
             </div>
           </div>
-        </v-col>
-        <v-col cols="12" md="6">
-          <h2 class="mb-9 text-h4">Свяжитесь с нами</h2>
-          <contact-form style="max-width: 450px" :dark="false" />
-          <!-- class="ma-auto" -->
+        </v-col> -->
+        <v-col cols="12">
+          <!-- md="6" -->
+          <h2 class="mb-9 text-h4 text-center">Свяжитесь с нами</h2>
+          <contact-form
+            class="ma-auto"
+            style="max-width: 450px"
+            :dark="false"
+          />
         </v-col>
       </v-layout>
     </v-container>
