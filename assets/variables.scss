@@ -2,8 +2,10 @@
 //
 // The variables you want to modify
 // $font-size-root: 20px;
-$heading-font-family: 'Montserrat';
-$body-font-family: 'Montserrat';
+$font: 'Montserrat';
+$heading-font-family: $font;
+$body-font-family: $font;
 $color-pack: false;
-@import '~vuetify/src/styles/styles.sass';
+
+// @import '~vuetify/src/styles/styles.sass';
 // @import '~vuetify/src/styles/styles.sass';

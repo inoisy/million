@@ -1,6 +1,10 @@
 import colors from 'vuetify/es5/util/colors'
 
-const baseURL = process.env.BASE_URL || 'http://localhost:1337'
+const baseURL = process.env.BASE_URL || 'https://api.bestadforyou.com'
+
+const siteURL = process.env.SITE_URL || `https://bestadforyou.com`
+console.log("🚀 ~ file: nuxt.config.js ~ line 64 ~ baseURL + '/graphql'", baseURL + '/graphql')
+
 export default {
   // env: {
   //   baseUrl: baseURL
@@ -47,15 +51,45 @@ export default {
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
+    ['@nuxtjs/axios', {
+      baseURL: baseURL,
+    }],
+    ['@nuxtjs/apollo', {
+      // watchLoading: '~/plugins/apollo-watch-loading-handler.js',
+      // optional
+      // errorHandler: '~/plugins/apollo-error-handler.js',
+      clientConfigs: {
+        default: {
+          httpEndpoint: baseURL + '/graphql',
+        },
+      }
+    }],
     ['nuxt-social-meta', {
-      url: "https://bestadforyou.com/",
+      url: siteURL,
       title: "BestAdForYou - Рекламная площадка",
       // description: description,
       // img: imageUrl + "/uploads/031ba5905e18488794851c8d512b1227.jpg",
       locale: 'ru_RU',
       // themeColor: '#d50000'
     }],
+    ['@nuxtjs/robots', {
+      UserAgent: '*',
+      Allow: '/',
+      Sitemap: siteURL + "/sitemap.xml"
+    }],
+    ['@nuxtjs/sitemap', {
+      hostname: siteURL,
+      gzip: true,
+      // routes
+    }],
+    ['@nuxtjs/yandex-metrika',
+      {
+        id: process.env.YANDEX_ID,
+        clickmap: true,
+        trackLinks: true,
+        accurateTrackBounce: true,
+        webvisor: true
+      }],
   ],
   // webfontloader: {
   //   google: {
@@ -68,12 +102,11 @@ export default {
   //   ]
   // },
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {
-    baseURL: baseURL,
-  },
+  // axios: ,
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {
+    customVariables: ["~/assets/variables.scss"],
     treeShake: true,
     defaultAssets: {
       font: {
@@ -81,10 +114,10 @@ export default {
       },
       icons: "md"
     },
-    options: {
-      customProperties: true
-    },
-    customVariables: ['~/assets/variables.scss'],
+    // options: {
+    //   customProperties: true
+    // },
+    // customVariables: ['~/assets/variables.scss'],
     theme: {
       dark: true,
       themes: {

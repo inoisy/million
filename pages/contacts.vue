@@ -1,8 +1,8 @@
 <template>
   <div class="d-flex fill-height">
     <v-container grid-list-lg class="align-center d-flex">
-      <v-layout row wrap class="py-12">
-        <!-- <v-col cols="12" md="6">
+      <v-row class="py-12">
+        <v-col v-if="showContacts" cols="12" md="6">
           <h1 class="text-h4 mb-9">Контакты</h1>
           <div
             v-for="(contact, i) in contacts"
@@ -22,17 +22,19 @@
               {{ contact.text }}
             </div>
           </div>
-        </v-col> -->
-        <v-col cols="12">
+        </v-col>
+        <v-col cols="12" :md="showContacts ? 6 : 12">
           <!-- md="6" -->
-          <h2 class="mb-9 text-h4 text-center">Свяжитесь с нами</h2>
+          <h2 class="mb-9 text-h4" :class="!showContacts && 'text-center'">
+            Свяжитесь с нами
+          </h2>
           <contact-form
-            class="ma-auto"
+            :class="!showContacts && 'ma-auto'"
             style="max-width: 450px"
             :dark="false"
           />
         </v-col>
-      </v-layout>
+      </v-row>
     </v-container>
     <!-- <div>
       <v-container grid-list-lg>
@@ -73,8 +75,19 @@ export default {
   },
   components: { ContactForm },
   computed: {
+    showContacts() {
+      // if (!this.$store.state.info) {
+      //   return false;
+      // }
+      // console.log(
+      //   "🚀 ~ file: contacts.vue ~ line 79 ~ showContacts ~ this.$store.state.info",
+      //   this.$store.state.info
+      // );
+
+      return this.$store.state.info.showContacts;
+    },
     contacts() {
-      const contacts = this.$store.state.contacts;
+      const contacts = this.$store.state.info;
 
       const contactsArr = [];
       if (contacts) {
@@ -86,8 +99,8 @@ export default {
           },
           {
             icon: "mail",
-            href: `mailto:${contacts.email}`,
-            text: contacts.email,
+            href: `mailto:${contacts.mail}`,
+            text: contacts.mail,
           }
           //   {
           //     icon: "access_time",

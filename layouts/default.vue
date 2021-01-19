@@ -25,17 +25,19 @@
           class="logo-wrapper d-inline-flex align-center mr-auto"
           style="text-decoration: none; color: white"
         >
+          <!-- {{ info }} -->
           <v-img
-            :src="require('~/assets/logo.png')"
+            :src="
+              (info.logo && info.logo.url && $config.baseURL + info.logo.url) ||
+              require('~/assets/logo.png')
+            "
             contain
             height="52px"
             width="52px"
             max-width="52px"
             class="mr-auto"
           ></v-img>
-          <span class="pl-3 logo-text" style=""
-            >Я гопник, - я вообще мало читал!
-          </span>
+          <span class="pl-3 logo-text" style="">{{ info.name }} </span>
         </nuxt-link>
 
         <v-btn
@@ -65,9 +67,7 @@
     </v-main>
     <v-footer absolute app>
       <v-container grid-list-lg>
-        <span
-          >&copy; {{ new Date().getFullYear() }} Лучшая реклама для вас.</span
-        >
+        <span>&copy; {{ new Date().getFullYear() }} {{ info.footerText }}</span>
       </v-container>
     </v-footer>
   </v-app>
