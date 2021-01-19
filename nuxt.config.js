@@ -3,7 +3,7 @@ import colors from 'vuetify/es5/util/colors'
 const baseURL = process.env.BASE_URL || 'https://api.bestadforyou.com'
 
 const siteURL = process.env.SITE_URL || `https://bestadforyou.com`
-console.log("🚀 ~ file: nuxt.config.js ~ line 64 ~ baseURL + '/graphql'", baseURL + '/graphql')
+// console.log("🚀 ~ file: nuxt.config.js ~ line 64 ~ baseURL + '/graphql'", baseURL + '/graphql')
 
 export default {
   // env: {

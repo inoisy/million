@@ -7,11 +7,11 @@ export const state = () => ({
         name: "",
         showContacts: false,
     },
-    contacts: {
-        phone: "+79057655115",
-        email: "bestadforyou5115@gmail.com"
-    },
-    ad: []
+    // contacts: {
+    //     phone: "+79057655115",
+    //     email: "bestadforyou5115@gmail.com"
+    // },
+    ads: []
 })
 
 
@@ -21,7 +21,7 @@ export const mutations = {
         state.dialog = item
     },
     SET_AD(state, item) {
-        state.ad = item
+        state.ads = item
     },
     SET_INFO(state, item) {
         state.info = item
@@ -29,13 +29,7 @@ export const mutations = {
 }
 
 export const actions = {
-    async nuxtServerInit(state, { $axios, app }) {
-        // console.log("🚀 ~ file: index.js ~ line 28 ~ nuxtServerInit ~ ctx", Object.keys(ctx))
-        // await dispatch('storeDispatchFunc')
-        // const { data } = await $axios.get('/advertisements')
-        // console.log("🚀 ~ file: index.js ~ line 32 ~ storeDispatchFunc ~ data", data)
-        // state.commit('SET_AD', data)
-        // console.log(app.apolloProvider.defaultClient)
+    async nuxtServerInit(state, { app }) {
         const client = app.apolloProvider.defaultClient;
         const query = gql`
             query MainQuery{
@@ -67,7 +61,7 @@ export const actions = {
         })
         state.commit('SET_AD', data.advertisements)
         state.commit('SET_INFO', data.info)
-        console.log("🚀 ~ file: index.js ~ line 59 ~ nuxtServerInit ~ dataGraph", data)
+        // console.log("🚀 ~ file: index.js ~ line 59 ~ nuxtServerInit ~ dataGraph", data)
     },
     // async storeDispatchFunc({ commit }) {
 

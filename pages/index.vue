@@ -181,13 +181,13 @@ export default {
       titleTemplate: "",
     };
   },
-  async asyncData({ $axios }) {
-    const { data: ads } = await $axios.get("/advertisements");
-    // console.log("🚀 ~ file: index.vue ~ line 171 ~ asyncData ~ ads", ads);
-    return {
-      items: ads,
-    };
-  },
+  // async asyncData({ $axios }) {
+  //   const { data: ads } = await $axios.get("/advertisements");
+  //   // console.log("🚀 ~ file: index.vue ~ line 171 ~ asyncData ~ ads", ads);
+  //   return {
+  //     items: ads,
+  //   };
+  // },
   data() {
     return {
       cursorX: 20,
@@ -340,12 +340,14 @@ export default {
     this.handleResize();
   },
   computed: {
+    items() {
+      return this.$store.state.ads;
+    },
     dialog: {
       get() {
         return this.dialogVal;
       },
       set(val) {
-        console.log("🚀 ~ file: index.vue ~ line 343 ~ set ~ val", val);
         if (!val) {
           document.body.style = "";
         }
@@ -406,16 +408,9 @@ export default {
       //   return;
       // }
       if (document.body.clientWidth < 1000 + this.padding * 2) {
-        // console.log(this.isMobile);
         const getRect = this.$refs.container.getBoundingClientRect();
-        // console.log(
-        //   "🚀 ~ file: index.vue ~ line 304 ~ mounted ~ getRect",
-        //   getRect
-        // );
         const width = getRect.width;
         const scale = (width - this.padding * 2) / 1000;
-        console.log("scale ", scale);
-        // console.log("width/100 ", width / widthWidhPadding);
         if (scale < 1) {
           this.scale = scale;
         } else {
