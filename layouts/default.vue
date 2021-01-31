@@ -37,7 +37,7 @@
             max-width="52px"
             class="mr-auto"
           ></v-img>
-          <span class="pl-3 logo-text" style="">{{ info.name }} </span>
+          <span class="logo-text" style="">{{ info.name }} </span>
         </nuxt-link>
 
         <v-btn
@@ -67,7 +67,9 @@
     </v-main>
     <v-footer absolute app>
       <v-container grid-list-lg>
-        <span>&copy; {{ new Date().getFullYear() }} {{ info.footerText }}</span>
+        <span style="font-size: 12px">
+          &copy; {{ new Date().getFullYear() }} {{ info.footerText }}
+        </span>
       </v-container>
     </v-footer>
   </v-app>
@@ -76,14 +78,20 @@
 .logo-wrapper {
   // max-width: 300px;
   .logo-text {
-    font-size: 1.2rem;
+    font-size: 1rem;
     line-height: normal;
+    padding-left: 6px;
   }
 }
 
 @media (min-width: 600px) {
   .logo-wrapper {
     // max-width: 400px;
+    .logo-text {
+      font-size: 1.2rem;
+
+      padding-left: 10px;
+    }
   }
 }
 
