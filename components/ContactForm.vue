@@ -104,16 +104,25 @@
     </v-flex>
     <!-- </template> -->
     <v-slide-y-transition>
-      <v-flex xs12 v-if="this.formSuccess || this.formError">
-        <v-alert
+      <v-flex xs12 v-if="this.formError">
+        <!-- this.formSuccess ||  -->
+        <!-- <v-alert
           :value="this.formSuccess"
           class="flex xs12 mt-3"
           type="success"
         >
           Заказ успешно отправлен.
-        </v-alert>
-        <v-alert :value="this.formError" class="flex xs12 mt-3" type="error">
-          Ошибка при отправке заказа.
+        </v-alert> -->
+        <v-alert
+          color="#F44336"
+          :value="this.formError"
+          class="flex xs12 mt-3"
+          type="error"
+        >
+          Ошибка при отправке.
+          <template #prepend>
+            <Warning class="mr-3" />
+          </template>
         </v-alert>
       </v-flex>
     </v-slide-y-transition>
@@ -130,6 +139,8 @@
 
 <script>
 import Checked from "~/assets/checked.svg?inline";
+import Warning from "~/assets/warning.svg?inline";
+
 import gql from "graphql-tag";
 
 import { validationMixin } from "vuelidate";
@@ -142,7 +153,7 @@ import {
   email,
 } from "vuelidate/lib/validators";
 export default {
-  components: { Checked },
+  components: { Checked, Warning },
   props: {
     productName: {
       type: String,
@@ -207,7 +218,7 @@ export default {
         .mutate({
           mutation: gql`
             mutation(
-              $name: String!
+              # $name: String!
               $phone: String!
               $message: String
               $email: String
