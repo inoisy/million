@@ -218,7 +218,7 @@ export default {
         .mutate({
           mutation: gql`
             mutation(
-              # $name: String!
+              $name: String!
               $phone: String!
               $message: String
               $email: String
