@@ -1,19 +1,18 @@
 <template>
   <div class="wrapper" ref="container">
-    <v-dialog v-model="dialog" width="600" :value="true" hide-overlay>
-      <v-card class="px-8 py-12" light>
-        <p class="display-1 font-weight-bold text-center mb-6">
-          Забронируйте место
-        </p>
-        <contact-form />
+    <!-- <v-dialog v-model="dialog" width="600" :value="true" hide-overlay>
+      <v-card class="dialogInner" light>
+        <h2 v-if="!succseed" class="dialogHeader">Забронируйте место</h2>
+        <contact-form @success="formSucceed" />
       </v-card>
-    </v-dialog>
+    </v-dialog> v-if="dialog"  -->
+    <default-dialog />
+
     <div
       class="wrapper-inner mx-auto"
       v-resize="handleResize"
       :style="`padding-left: ${padding}px; padding-right: ${padding}px;`"
     >
-      <!-- {{ $config }} -->
       <div class="grid-container" :style="`transform: scale(${scale});`">
         <div style="position: absolute; left: 0; right: 0; top: 0; bottom: 0">
           <canvas
@@ -21,8 +20,9 @@
             @mouseover="handleOver"
             @mouseout="handleOut"
             id="canv"
-            >Ваш браузер устарел, обновитесь.</canvas
           >
+            Ваш браузер устарел, обновитесь.
+          </canvas>
         </div>
         <template v-for="(item, index) in items">
           <ad-item :item="item" :key="`ad-item${index}`" />
@@ -36,14 +36,14 @@
           @mouseout="handleCursorOut"
           @click="handlePointClick"
         >
-          <!-- <v-fade-transition> -->
-          <transition name="fade">
+          <v-fade-transition>
+            <!-- <transition name="fade"> -->
             <div class="tooltip" style="" v-show="showTooltip">
               <span>Место свободно</span><br />
               Забронировать?
             </div>
-          </transition>
-          <!-- </v-fade-transition> -->
+            <!-- </transition> -->
+          </v-fade-transition>
         </div>
       </div>
     </div>
@@ -52,6 +52,9 @@
   </div>
 </template>
 <style lang="scss" >
+body {
+  transform: none !important;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.35s;
@@ -59,6 +62,7 @@
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
+
 .wrapper {
   height: 100%;
   max-height: calc(100vh - 60px);
@@ -79,7 +83,8 @@
   overflow: hidden;
   .wrapper-inner {
     // max-width: 1000px;
-    max-height: 100vw;
+    max-height: calc(100vw - 48px);
+
     display: flex;
     margin-bottom: -24px;
     // justify-content: center;
@@ -168,9 +173,7 @@ import ContactForm from "~/components/ContactForm.vue";
 import AdItem from "~/components/AdItem";
 // import Logo from "~/components/Logo.vue";
 // import VuetifyLogo from "~/components/VuetifyLogo.vue";
-function round10(val) {
-  return Math.round(val / 10) * 10;
-}
+
 export default {
   head() {
     return {
@@ -178,13 +181,6 @@ export default {
       titleTemplate: "",
     };
   },
-  // async asyncData({ $axios }) {
-  //   const { data: ads } = await $axios.get("/advertisements");
-  //   // console.log("🚀 ~ file: index.vue ~ line 171 ~ asyncData ~ ads", ads);
-  //   return {
-  //     items: ads,
-  //   };
-  // },
   data() {
     return {
       cursorX: 20,
@@ -192,23 +188,10 @@ export default {
       showTooltip: false,
       cursorHover: false,
       showPoint: false,
-      dialogVal: false,
-      // items: [
-      //   {
-      //     name: "Мыловаренный Комбинат",
-      //     img: {
-      //       url: require("~/assets/llogo.png"),
-      //     },
-      //     link: "http://mmk-soap.ru/",
-      //     coords: {
-      //       startX: 5,
-      //       endX: 30,
-      //       startY: 3,
-      //       endY: 10,
-      //     },
-      //   },
-      // ],
+      // dialogVal: false,
+
       scale: 1,
+      // succseed: false,
     };
   },
   components: {
@@ -337,21 +320,25 @@ export default {
     this.handleResize();
   },
   computed: {
+    dialog() {
+      return this.$store.state.dialog.isShow;
+    },
+
     items() {
       return this.$store.state.ads;
     },
-    dialog: {
-      get() {
-        return this.dialogVal;
-      },
-      set(val) {
-        if (!val) {
-          document.body.style = "";
-        }
-        // set does not return anything
-        this.dialogVal = val;
-      },
-    },
+    // dialog: {
+    //   get() {
+    //     return this.dialogVal;
+    //   },
+    //   set(val) {
+    //     if (!val) {
+    //       document.body.style = "";
+    //     }
+    //     // set does not return anything
+    //     this.dialogVal = val;
+    //   },
+    // },
 
     pointStyles() {
       return {
@@ -374,6 +361,14 @@ export default {
     },
   },
   methods: {
+    // formSuccessful() {
+    //   this.succseed = true;
+    //   console.log("formSucceed");
+    //   setTimeout(() => {
+    //     // await this.close();
+    //     this.dialogVal = false;
+    //   }, 7000);
+    // },
     handleCursorOut(e) {
       this.cursorHover = false;
       this.showTooltip = false;
@@ -419,11 +414,15 @@ export default {
     },
     handlePointClick() {
       var scale = "scale(1)";
-      document.body.style.webkitTransform = scale; // Chrome, Opera, Safari
-      document.body.style.msTransform = scale; // IE 9
+      // document.body.style.webkitTransform = scale; // Chrome, Opera, Safari
+      // document.body.style.msTransform = scale; // IE 9
       document.body.style.transform = scale; // General
       // document.body.style.zoom = "100%";
-      this.dialog = true;
+      this.$store.dispatch("toggleDialog", {
+        isShow: true,
+        point: [this.cursorY, this.cursorX],
+      });
+      // this.dialog = true;
     },
 
     // handleLeave(e) {

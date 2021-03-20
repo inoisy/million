@@ -2,7 +2,7 @@
   <div class="d-flex fill-height">
     <v-container grid-list-lg class="align-center d-flex">
       <v-row class="py-12">
-        <v-col v-if="showContacts" cols="12" md="6">
+        <!-- <v-col v-if="showContacts" cols="12" md="6">
           <h1 class="text-h4 mb-9">Контакты</h1>
           <div
             v-for="(contact, i) in contacts"
@@ -22,17 +22,15 @@
               {{ contact.text }}
             </div>
           </div>
-        </v-col>
-        <v-col cols="12" :md="showContacts ? 6 : 12">
-          <!-- md="6" -->
-          <h2 class="mb-9 text-h4" :class="!showContacts && 'text-center'">
-            Свяжитесь с нами
-          </h2>
-          <contact-form
-            :class="!showContacts && 'ma-auto'"
-            style="max-width: 450px"
-            :dark="false"
-          />
+        </v-col> -->
+        <v-col cols="12">
+          <!-- md="6":md="showContacts ? 6 : 12"!showContacts &&   :class="'" :class="''"!showContacts && '-->
+
+          <contact-form class="ma-auto" style="max-width: 450px" :dark="false">
+            <h2 class="mb-9 text-h4 text-center" style="width: 100%">
+              Свяжитесь с нами
+            </h2></contact-form
+          >
         </v-col>
       </v-row>
     </v-container>
@@ -74,43 +72,43 @@ export default {
     };
   },
   components: { ContactForm },
-  computed: {
-    showContacts() {
-      // if (!this.$store.state.info) {
-      //   return false;
-      // }
-      // console.log(
-      //   "🚀 ~ file: contacts.vue ~ line 79 ~ showContacts ~ this.$store.state.info",
-      //   this.$store.state.info
-      // );
+  // computed: {
+  // showContacts() {
+  //   // if (!this.$store.state.info) {
+  //   //   return false;
+  //   // }
+  //   // console.log(
+  //   //   "🚀 ~ file: contacts.vue ~ line 79 ~ showContacts ~ this.$store.state.info",
+  //   //   this.$store.state.info
+  //   // );
 
-      return this.$store.state.info.showContacts;
-    },
-    contacts() {
-      const contacts = this.$store.state.info;
+  //   return this.$store.state.info.showContacts;
+  // },
+  // contacts() {
+  //   const contacts = this.$store.state.info;
 
-      const contactsArr = [];
-      if (contacts) {
-        contactsArr.push(
-          {
-            icon: "phone",
-            href: `tel:${contacts.phone}`,
-            text: contacts.phone,
-          },
-          {
-            icon: "mail",
-            href: `mailto:${contacts.mail}`,
-            text: contacts.mail,
-          }
-          //   {
-          //     icon: "access_time",
-          //     href: ``,
-          //     text: contacts.accessTime
-          //   }
-        );
-      }
-      return contactsArr;
-    },
-  },
+  //   const contactsArr = [];
+  //   if (contacts) {
+  //     contactsArr.push(
+  //       {
+  //         icon: "phone",
+  //         href: `tel:${contacts.phone}`,
+  //         text: contacts.phone,
+  //       },
+  //       {
+  //         icon: "mail",
+  //         href: `mailto:${contacts.mail}`,
+  //         text: contacts.mail,
+  //       }
+  //       //   {
+  //       //     icon: "access_time",
+  //       //     href: ``,
+  //       //     text: contacts.accessTime
+  //       //   }
+  //     );
+  //   }
+  //   return contactsArr;
+  // },
+  // },
 };
 </script>

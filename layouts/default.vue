@@ -1,6 +1,6 @@
 <template>
-  <v-app dark height="64px">
-    <v-navigation-drawer v-model="drawer" app right touchless temporary>
+  <v-app height="64px">
+    <v-navigation-drawer v-model="drawer" dark app right touchless temporary>
       <v-list>
         <v-list-item
           v-for="(item, i) in menuItems"
@@ -14,7 +14,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar fixed app class="py-0">
+    <v-app-bar fixed app dark class="py-0">
       <v-container
         fill-height
         class="py-0 d-flex align-center"
@@ -46,26 +46,35 @@
           text
           tile
           style="height: 100%"
-          >О проекте</v-btn
         >
+          О проекте
+        </v-btn>
         <v-btn
           class="hidden-md-and-down"
           to="/contacts"
           text
           tile
           style="height: 100%"
-          >Контакты</v-btn
         >
-        <v-app-bar-nav-icon
+          Контакты
+        </v-btn>
+
+        <v-btn class="hidden-lg-and-up" icon @click.stop="drawer = !drawer">
+          <MenuIcon style="width: 24px; height: 24px" />
+          <!-- <div v-html="menuIcon"></div> -->
+          <!-- <img :srqc="require('~/assets/menu.svg?include')" alt="" /> -->
+        </v-btn>
+        <!-- <v-app-bar-nav-icon
+          dark
           class="hidden-lg-and-up"
-          @click.stop="drawer = !drawer"
-        />
+          
+        /> -->
       </v-container>
     </v-app-bar>
     <v-main>
       <nuxt />
     </v-main>
-    <v-footer absolute app>
+    <v-footer absolute app dark>
       <v-container grid-list-lg>
         <span style="font-size: 12px">
           &copy; {{ new Date().getFullYear() }} {{ info.footerText }}
@@ -105,9 +114,11 @@
 }
 </style>
 <script>
+import Menu from "~/assets/menu.svg?inline";
 export default {
   data() {
     return {
+      // menuIcon,
       // clipped: false,
       drawer: false,
       // fixed: false,1
@@ -129,6 +140,7 @@ export default {
       // title: "Vuetify.js",
     };
   },
+  components: { MenuIcon: Menu },
   computed: {
     info() {
       return this.$store.state.info;

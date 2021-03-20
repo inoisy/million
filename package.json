@@ -23,6 +23,8 @@
     "vuelidate": "^0.7.6"
   },
   "devDependencies": {
+    "@nuxtjs/style-resources": "^1.0.0",
+    "@nuxtjs/svg": "^0.1.12",
     "@nuxtjs/vuetify": "^1.11.2",
     "deepmerge": "^4.2.2",
     "sass": "^1.30.0",

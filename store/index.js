@@ -2,7 +2,10 @@ import gql from "graphql-tag";
 
 
 export const state = () => ({
-    dialog: false,
+    dialog: {
+        isShow: false,
+        point: null
+    },
     info: {
         name: "",
         showContacts: false,
